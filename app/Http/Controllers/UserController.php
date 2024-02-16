@@ -13,7 +13,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        // $users = User::all();
+        $users = User::withCount('posts')->paginate(3);
+        // $users->User::paginate(4);
         return view('index',['users' =>$users]);
     }
 
@@ -41,6 +43,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::find($id);
+        $user->load('posts');
         return view('show',['user' =>$user]);
     }
 
@@ -65,7 +68,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
      
-        $user = User::findOrFail($id);
+        // $user = User::findOrFail($id);
+        $user = User::withTrashed()->find($id);
         $user->delete();
     return redirect()->route('user.index')->with('success', 'User deleted successfully');}
 }

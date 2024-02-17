@@ -14,6 +14,13 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->title }}</h5>
+                    @if($post->image)
+                    <img src="/storage/{{ $post->image }}" class="card-img-top w-25" alt="Post Image">
+                    @else
+                    <p>No Image Here</p>
+                    @endif
+                
+
                     <p><span class="font-weight-bold">Published at:</span> {{ $post->published_at->format('d-m-y h:i a') }}</p>
 
                     <p class="card-text">{{ $post->body }}</p>

@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Models\User;
 use App\Events\PostCreated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -28,12 +30,19 @@ class PostController extends Controller
     }
 
     public function store(Request $request)
+
     {
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->slug = $request->input('slug');
-        $post->user_id = $request->input('user_id');
+        $post->user_id = Auth::id();
+       
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $imagePath = $request->file('image')->store('image', 'public');
+            $post->image = $imagePath;
+        } 
 
         // $user = User::find(1); 
         // $user = User::find($post->user_id);
@@ -41,15 +50,18 @@ class PostController extends Controller
         // Retrieve the authenticated user
         $user = $request->user();
 
-        $post = $user ->posts()->create([
-        'title' =>$post->title,
-        'body' => $post->body,
-        'slug' => $post->slug,
-        'user_id'=>$post->user_id
-        ]);
+        // $post = $user ->posts()->create([
+        // 'title' =>$post->title,
+        // 'body' => $post->body,
+        // 'slug' => $post->slug,
+        // 'user_id'=>$post->user_id,
+        // 'image'=>$post->image
+        // ]);
+
+        $post->save();
         event(new PostCreated($post));
 
-        // $post->save();
+        // 
 
        
         return redirect()->route('posts.index')->with('success', 'Post created successfully!');

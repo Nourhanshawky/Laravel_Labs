@@ -8,7 +8,7 @@
     <title>Create User</title>
 </head>
 <h1>Create Post</h1>
-    <form method="POST" action="{{ route('posts.store') }}">
+    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
             <label class="form-label">Post Title</label>
@@ -22,14 +22,19 @@
             <label class="form-label">What do you think?</label>
             <textarea class="form-control w-50" name="body" rows="5"></textarea>
         </div>
+            <div class="mb-3 w-25">
+        <label for="formFile" class="form-label">choose post image</label>
+        <input class="form-control" type="file" id="formFile" name='image'>
+        </div>
+
         <!-- <label for="user"> Choose the Writer of the post:</label>
         <select name="user_id" id="user_id" required>
         @foreach ($users as $user)
             <option value="{{ $user->id }}">{{ $user->name }}</option>
         @endforeach
     </select> -->
-    <label for="user"> Your post published with name:</label>
-    <p>{{ auth()->user()->name }}</p>
+    <!-- <label for="user"> Your post published with name:</label>
+    <p>{{ auth()->user()->name }}</p> -->
         <div class="form-group">
             <input type="submit" value="Submit" name="submit" class="btn btn-primary">
         </div>

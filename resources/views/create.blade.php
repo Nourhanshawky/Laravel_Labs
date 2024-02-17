@@ -30,6 +30,10 @@
             <input type="submit" value="Submit" name="submit" class="btn btn-primary">
         </div>
     </form>
+
+    <a href="{{route('auth.facebook')}}" method="get">
+        <button class="btn btn-primary">Sign In With Facebook</button>
+</a>
 </body>
 </html>
 @endsection

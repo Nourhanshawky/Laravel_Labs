@@ -14,8 +14,10 @@ class UserController extends Controller
     public function index()
     {
         // $users = User::all();
+
         $users = User::withCount('posts')->paginate(3);
         // $users->User::paginate(4);
+
         return view('index',['users' =>$users]);
     }
 

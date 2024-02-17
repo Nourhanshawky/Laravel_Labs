@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\PostController;
+
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FacebookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
+    
 });
 
 require __DIR__.'/auth.php';
@@ -67,3 +70,6 @@ Route::get('/posts/edit/{id}', [PostController::class, 'edit'])->name('posts.edi
 Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
 
 Route::delete('/posts/destory/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+ 
+Route::get('/userFacebook', [FacebookController::class, 'index'])->name('user.index');
